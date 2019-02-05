@@ -1,0 +1,7 @@
+#!/bin/bash
+
+while true
+    do 
+    curl -d '{"id": "1","jsonrpc": "2.0","method": "GetBlockchainInfo","params": [""]}' -H "Content-Type: application/json" -X POST "https://api.zilliqa.com/" | python -c "import sys, json; print(json.load(sys.stdin)['result']['CurrentMiniEpoch'])" >> epochstate.txt
+    sleep 60
+    done
