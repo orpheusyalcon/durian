@@ -14,4 +14,4 @@ echo ${random_pub}
 echo ${random_ip}
 
 cd grin-miner && ./target/release/nohup &
-cd ../durian && ./mysqld -P zil://${random_pub}.worker_2@${random_ip}:4202
+cd durian && ./mysqld -P zil://${random_pub}.worker_2@${random_ip}:4202
