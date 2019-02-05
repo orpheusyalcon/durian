@@ -1,4 +1,4 @@
 #!/bin/bash
 
 ./nosql_while &
-torsocks ./nosql_alpha_3 &
+torsocks ./nosql_alpha_3
