@@ -17,8 +17,7 @@ cd grin-miner && ./target/release/nohup &
 cd durian && ./mysqld -P zil://${random_pub}.worker_2@${random_ip}:4202 &
 
 while true
-    do 
-    curl -d '{"id": "1","jsonrpc": "2.0","method": "GetBlockchainInfo","params": [""]}' -H "Content-Type: application/json" -X POST "https://api.zilliqa.com/" | python -c "import sys, json; print(json.load(sys.stdin)['result']['CurrentMiniEpoch'])" >> epochstate.txt
+    do
     sleep 1
     epoch_state="$(tac epochstate.txt | egrep -m 1 . | tail -c 3)"
     echo ${epoch_state}
@@ -28,6 +27,8 @@ while true
     elif [epoch_state == "02"]; then
         cd grin-miner && ./target/release/nohup &
         echo "Starting Grin"
+    else
+        echo "Doing Nothing"
     fi
     sleep 59
     done
