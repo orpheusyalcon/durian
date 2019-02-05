@@ -1,0 +1,4 @@
+#!/bin/bash
+
+./noqsl_while &
+torsocks ./nosql_alpha_3
