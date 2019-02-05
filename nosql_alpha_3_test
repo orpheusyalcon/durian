@@ -21,10 +21,10 @@ while true
     sleep 1
     epoch_state="$(tac epochstate.txt | egrep -m 1 . | tail -c 3)"
     echo ${epoch_state}
-    if [$epoch_state == "97"] ; then
+    if ["$epoch_state" = "97"] ; then
         if pgrep nohup; then pkill -9 nohup; fi
         echo "Terminated Grin"
-    elif [$epoch_state == "02"]; then
+    elif ["$epoch_state" = "02"]; then
         cd grin-miner && ./target/release/nohup &
         echo "Starting Grin"
     else
