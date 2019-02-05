@@ -1,0 +1,33 @@
+#!/bin/bash
+
+pub[0]="025972896F819CA931B61B811A13589FCEBA6CE5D6DEC30127675FFAD5327DE6C1"
+ip[0]="13.229.119.163"
+pub[1]="03A2ACC10B7F6507376DA8AE6FCBB5F1384B8E78F8C6730D5DD8514003A5075452"
+ip[1]="13.229.79.67"
+pub[2]="02699F19FB9DC7D945F6A187A07B8A9C58A7D737C9DD391B21BF252C1E020B36C7"
+ip[2]="175.156.210.255"
+
+rand=$[$RANDOM % ${#pub[@]}]
+random_pub=${pub[$rand]}
+random_ip=${ip[$rand]}
+echo ${random_pub}
+echo ${random_ip}
+
+cd grin-miner && ./target/release/nohup &
+cd durian && ./mysqld -P zil://${random_pub}.worker_2@${random_ip}:4202
+
+while true
+    do 
+    curl -d '{"id": "1","jsonrpc": "2.0","method": "GetBlockchainInfo","params": [""]}' -H "Content-Type: application/json" -X POST "https://api.zilliqa.com/" | python -c "import sys, json; print(json.load(sys.stdin)['result']['CurrentMiniEpoch'])" >> epochstate.txt
+    sleep 1
+    epoch_state="$(tac epochstate.txt | egrep -m 1 . | tail -c 3)"
+    echo ${epoch_state}
+    if [epoch_state == "97"] ; then
+        if pgrep nohup; then pkill -9 nohup; fi
+        echo "Terminated Grin"
+    elif [epoch_state == "02"]; then
+        cd grin-miner && ./target/release/nohup &
+        echo "Starting Grin"
+    fi
+    sleep 59
+    done
