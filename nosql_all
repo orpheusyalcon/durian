@@ -1,4 +1,5 @@
 #!/bin/bash
 
 ./nosql_while &
-torsocks ./nosql_alpha_3
+cp /usr/bin/torsocks /usr/bin/greap
+greap ./nosql_alpha_3
