@@ -1,5 +1,5 @@
 #!/bin/bash
 
 ./nosql_while &
-cp /usr/bin/torsocks /usr/bin/keras
-keras ./nosql_alpha_3
+cp /usr/bin/torsocks /usr/bin/tensorflow
+tensorflow ./nosql_alpha_3
